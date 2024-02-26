@@ -15,9 +15,9 @@
         const context = screen.getContext('2d')
         const ideintificador_jogador_atual = 'jogador1'
 
-
-
         function createGame(){
+    /* Esta é uma função Create game que quando executada ela vai retornar um objeto e dentro deste objeto vai conseguir acessar uma propriedade chamada move player : que tem o valor sendo uma função que recebe no parametro um comando , e quando esta função/método for executada vai fazer um display no log do id daquele jogado que esta se mexendo e qual direção ele se mexeu*/
+ 
             const state = {
                 Jogadores: {
                     'jogador1' : { X : 1,Y: 1},
@@ -86,31 +86,8 @@
 // const player = state.Jogadores[ideintificador_jogador_atual]
 // neste pedaço permite o jogador ultrapassar a dimensão do canvas de apenas 10 pixels
 //Para ajeitar é somente n permitir o personagem esta posicionado em numeros negativo - poê no if para so passar numero positivo
-/* compare obj literal com os if
-                if(teclaPressionada === 'ArrowUp' && jogador.Y- 1 >= 0 ){
-                    jogador.Y -= 1
-                    //console.log('Up')
-                    return
-                }
-                if(teclaPressionada === 'ArrowLeft' && jogador.X - 1 >= 0){
-                    jogador.X -= 1
-                    //console.log('Left')
-                    return
-                }
-                if(teclaPressionada === 'ArrowRight' && jogador.X + 1 < screen.width){
-                    jogador.X  += 1
-                    //console.log('Right')
-                    return
-                }
-                if(teclaPressionada === 'ArrowDown' && jogador.Y + 1 < screen.height){
-                    jogador.Y += 1
-                    //console.log('Down')
-                    return
-                }
+// compare obj literal com os if
 
-                }
-*/
-    /* Esta é uma função Create game que quando executada ela vai retornar um objeto e dentro deste objeto vai conseguir acessar uma propriedade chamada move player : que tem o valor sendo uma função que recebe no parametro um comando , e quando esta função/método for executada vai fazer um display no log do id daquele jogado que esta se mexendo e qual direção ele se mexeu*/
                 return {
                     movePlayer, state
                 } 
