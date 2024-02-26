@@ -75,8 +75,8 @@
         keyboardListener.inscreverObserver(game.movePlayer) //E agora, somente dentro do runtime que essas duas camadas vão se comunicar.
         //-------------------------
 
-        const network = createNetwork()                     // aqui criou um ponto da camada network para se comunicar com a camada input
-        keyboardListener.inscreverObserver(network.update) // aqui add função do network para dentro do array dentro do state 
+//        const network = createNetwork()                     // aqui criou um ponto da camada network para se comunicar com a camada input
+//        keyboardListener.inscreverObserver(network.update) // aqui add função do network para dentro do array dentro do state 
 
         function createKeyboardListener(){
             const state = {
