@@ -1,0 +1,10 @@
+#screen{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(160, 160, 160);
+    margin-left: 0px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    width: 400px;
+    height: 400px;
+}

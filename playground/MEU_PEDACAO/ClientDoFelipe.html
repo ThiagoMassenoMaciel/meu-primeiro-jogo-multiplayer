@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiro Jogo Multiplayer</title>
+
+    <link rel="stylesheet" href="./style.css">
+    
+</head>
+<body>
+    <canvas id="screen" width="10" height="10"></canvas>
+    <script>
+        const screen = document.getElementById('screen')
+        const context = screen.getContext('2d')
+
+        const games = {
+            Jogadores: {
+                'jogador1' : { X : 1,Y: 1},
+                'jogador2' : { X : 9,Y: 9}
+            }
+            ,
+            Frutas : {
+                'Fruta1': { X : 4, Y : 4 },
+                'Fruta2': { X : 15,Y :15 }
+            }
+        }
+        
+        renderScreen()
+
+        function renderScreen(){
+
+            context.fillStyle = 'white'
+            context.clearRect(0,0,10,10)
+
+            const cor1 = 'black'
+            const cor2 = 'green'
+            //para cada jogador , setar sua cor preta , dizer sua posição e seu tamanho
+            for ( id_jogador in games.Jogadores){
+                const jogador = games.Jogadores[id_jogador] // acessando cada objeto que é um dos jogadores
+                context.fillStyle = cor1
+                context.fillRect(jogador.X, jogador.Y, 1, 1)
+
+            }
+
+            for ( id_fruta in games.Frutas){
+                const fruta = games.Frutas[id_fruta] // acessando cada objeto que é um dos jogadores
+                context.fillStyle = cor2
+                context.fillRect(fruta.X, fruta.Y, 1, 1)
+
+            }
+
+            requestAnimationFrame(renderScreen)
+        }
+    </script>
+</body>
+</html>

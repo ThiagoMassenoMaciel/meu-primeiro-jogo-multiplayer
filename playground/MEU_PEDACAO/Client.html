@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiro Jogo Multiplayer</title>
+
+    <link rel="stylesheet" href="./style.css">
+    
+</head>
+<body>
+    <canvas id="screen" width="500" height="500">
+    </canvas>
+    <script>
+        const screen = document.getElementById('screen')
+        const context = screen.getContext('2d')
+
+        const color = 'red'
+        const positionX = 50
+        const positionY = 50
+        const width = 25
+        const height = 25
+
+        context.fillStyle = color
+        context.fillRect(positionX, positionY, width,height)
+
+        const colorr = 'purple'
+        const positioX = 100
+        const positioY = 50
+        const widt = 25
+        const heigh = 25
+
+        context.fillStyle = colorr
+        context.fillRect(positioX, positioY, widt,heigh)
+
+        const colorrr = 'yellow'
+        const positiX = 475
+        const positiY = 475
+        const wid = 25
+        const heig = 25
+
+        context.fillStyle = colorrr
+        context.fillRect(positiX, positiY, wid,heig)
+// do jeito que eu pensei
+        const array = []
+        array.push({ id : 1, cor : 'white' , wid : 25 , hei : 25 , coordX : 150 , coordY: 50})
+        array.push({ id : 2, cor : 'white' , wid : 25 , hei : 25 , coordX : 200 , coordY: 50})
+        array.push({ id : 3, cor : 'white' , wid : 25 , hei : 25 , coordX : 250 , coordY: 50})
+        
+        array.forEach(e => {
+            context.fillStyle = e.cor
+            context.fillRect( e.coordX , e.coordY, e.wid, e.hei)
+
+            console.log( `adicionado o ${e.id} com a cordenada ${e.coordX}`)
+        })
+// do jeito que o felipe dechamps pensou
+
+        const games = {
+            Jogadores: {
+                'jogador1' : {
+                    coordenadaX : 0,
+                    coordenadaY : 1
+                },
+                'jogador2' : {
+                    coordenadaX : 1,
+                    coordenadaY : 2
+                }
+            }
+            ,
+            Frutas : {
+                'Fruta1': {
+                    coordenadaX : 4,
+                    coordenadaY : 5
+                }
+                ,
+                'Fruta2': {
+                    coordenadaX : 4,
+                    coordenadaY : 5
+                }
+            }
+        }
+
+
+        
+        renderScreen()
+
+        function renderScreen(){
+            console.log('Executando a função')
+            //para cada jogador , setar sua cor preta , dizer sua posição e seu tamanho
+            for ( id_jogador in game.Jogadores){
+                const jogador = game.Jogadores[id_jogador] // acessando cada objeto que é um dos jogadores
+                context.fillStyle = 'black'
+                context.fillRect(jogador.coordenadaX, jogador.coordenadaY, 2, 2)
+
+                console.log('loop')
+
+            }
+
+            for ( id_fruta in game.Frutas){
+                const fruta = game.Frutas[id_fruta] // acessando cada objeto que é um dos jogadores
+                context.fillStyle = 'green'
+                context.fillRect(fruta.coordenadaX, fruta.coordenadaY, 2, 2)
+
+                console.log('loop')
+            }
+        }
+    </script>
+</body>
+</html>
