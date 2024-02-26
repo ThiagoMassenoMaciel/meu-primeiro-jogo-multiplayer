@@ -13,6 +13,7 @@
     <script>
         const screen = document.getElementById('screen')
         const context = screen.getContext('2d')
+        const ideintificador_jogador_atual = 'jogador1'
 
         const games = {
             Jogadores: {
@@ -26,6 +27,37 @@
             }
         }
         
+        document.addEventListener("keydown", handleKeyDown)
+
+        function handleKeyDown(event){
+            const jogador = games.Jogadores[ideintificador_jogador_atual]
+            
+            
+            const teclaPressionada = event.key
+
+//&& jogador.Y - 1 >= 0
+            if(teclaPressionada === 'ArrowUp' ){
+                jogador.Y -= 1
+                console.log('Up')
+                return
+            }
+            if(teclaPressionada === 'ArrowLeft'){
+                jogador.X -= 1
+                console.log('Left')
+                return
+            }
+            if(teclaPressionada === 'ArrowRight'){
+                jogador.X  += 1
+                console.log('Right')
+                return
+            }
+            if(teclaPressionada === 'ArrowDown'){
+                jogador.Y += 1
+                console.log('Down')
+                return
+            }
+        }
+
         renderScreen()
 
         function renderScreen(){
