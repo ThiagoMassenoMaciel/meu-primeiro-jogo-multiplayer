@@ -31,16 +31,62 @@
             }      
 
             function movePlayer(comando){
-                console.log(`Movendo ${comando.id_jogador} com ${comando.teclaPressionada} `)
+                console.log(`game.movePlayer -> Movendo ${comando.id_jogador} com ${comando.teclaPressionada} `)
 
-                const teclaPressionada = comando.teclaPressionada
+ /* o que ?*/   const teclaPressionada = comando.teclaPressionada // dentro desta variavel vem o nome da tecla 
+ /* o quem ?*/  const jogador = game.state.Jogadores[comando.id_jogador] //procurar objeto pelo que não é seu nome não funciona
+//------------------------------------------- adicionando outra variavel estilo object literals
+                const movimentosAceitos = {
+                    ArrowUp(jogador){
+                        
+                        if(jogador.Y- 1 >= 0 ){
+                            jogador.Y -= 1
+                            console.log(`game.movePlayer.ArrowUp - > confirmado :obj literal Movendo ${comando.id_jogador} para cima`)
+                            return
+                        }
+                    },
+                    ArrowLeft(jogador){
 
-                const jogador = game.state.Jogadores[comando.id_jogador] //procurar objeto pelo que não é seu nome não funciona
+                        if(jogador.X - 1 >= 0){
+                            jogador.X -= 1
+                            console.log(`confirmado :obj literal Movendo ${jogador} para esquerda`)
+                            return
+                        }
+                            
+                    },
+                    ArrowRight(jogador){
+
+                        if(teclaPressionada === 'ArrowRight' && jogador.X + 1 < screen.width){
+                            jogador.X  += 1
+                            console.log(`confirmado :obj literal Movendo ${jogador} para direita`)
+                            return
+                        }
+                            
+                    },
+                    ArrowDown(jogador){
+
+                        if(teclaPressionada === 'ArrowDown' && jogador.Y + 1 < screen.height){
+                            jogador.Y += 1
+                            console.log(`confirmado :obj literal Movendo ${jogador} para baixo`)
+                            return
+                        }
+                            
+                    }
+                }
+
+                const funcaoMover = movimentosAceitos[teclaPressionada] // dentro deste objeto eu quero acessar a funçaõ com o nome igual da tecla pressionada
+                //funcaoMover(jogador) // executo esta função  com o valor do jogador/player
+//-----------------------------------adicionou um test aqui
+                if (funcaoMover){
+                    funcaoMover(jogador)
+                }
+                return // TEMP
+//---------------------------------------------------------------------------  
 
 // const player = state.Jogadores[ideintificador_jogador_atual]
 // neste pedaço permite o jogador ultrapassar a dimensão do canvas de apenas 10 pixels
 //Para ajeitar é somente n permitir o personagem esta posicionado em numeros negativo - poê no if para so passar numero positivo
-
+/* compare obj literal com os if
                 if(teclaPressionada === 'ArrowUp' && jogador.Y- 1 >= 0 ){
                     jogador.Y -= 1
                     //console.log('Up')
@@ -63,6 +109,7 @@
                 }
 
                 }
+*/
     /* Esta é uma função Create game que quando executada ela vai retornar um objeto e dentro deste objeto vai conseguir acessar uma propriedade chamada move player : que tem o valor sendo uma função que recebe no parametro um comando , e quando esta função/método for executada vai fazer um display no log do id daquele jogado que esta se mexendo e qual direção ele se mexeu*/
                 return {
                     movePlayer, state
@@ -88,7 +135,7 @@
             }
 
             function notifyAll( comando_mensagem_encapsulada){
-                console.log(`Notificando ${state.observers.length} observers`)
+                console.log(`keyboardListener -> Notificando ${state.observers.length} observers`)
 
                 for( const  Funcao_de_um_observer of state.observers){
                     Funcao_de_um_observer(comando_mensagem_encapsulada)
