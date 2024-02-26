@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiro Jogo Multiplayer</title>
+
+    <link rel="stylesheet" href="./style.css">
+    
+</head>
+<body>
+    <canvas id="screen" width="10" height="10"></canvas>
+    <script>
+        const screen = document.getElementById('screen')
+        const context = screen.getContext('2d')
+        const ideintificador_jogador_atual = 'jogador1'
+
+        function createGame(){
+            /* Esta é uma função Create game que quando executada ela vai retornar um objeto e dentro deste objeto vai conseguir acessar uma propriedade chamada move player : que tem o valor sendo uma função que recebe no parametro um comando , e quando esta função/método for executada vai fazer um display no log do id daquele jogado que esta se mexendo e qual direção ele se mexeu*/
+
+            const state = {
+                Jogadores: {
+                    'jogador1' : { X : 1,Y: 1},
+                    'jogador2' : { X : 9,Y: 9}
+                }
+                ,
+                Frutas : {
+                    'Fruta1': { X : 4, Y : 4 },
+                    'Fruta2': { X : 15,Y :15 }
+                }
+            }      
+
+            function movePlayer(comando){
+                // a regra de negócio é so executar quando o jogador pressionar uma tecla reservada
+
+                console.log(`game.movePlayer -> Movendo ${comando.id_jogador} com ${comando.teclaPressionada} `)
+
+                const teclaPressionada = comando.teclaPressionada           /* o que ?*/    // dentro desta variavel vem o nome da tecla 
+                const jogador = game.state.Jogadores[comando.id_jogador]    /* o quem ?*/   
+                //------------------------------------------- adicionando outra variavel estilo object literals
+                const movimentosAceitos = {
+                    ArrowUp(jogador){
+                        
+                        if(jogador.Y- 1 >= 0 ){
+                            jogador.Y -= 1
+                            console.log(`game.movePlayer.ArrowUp - > confirmado :obj literal Movendo ${comando.id_jogador} para cima`)
+                            return
+                        }
+                    },
+                    ArrowLeft(jogador){
+
+                        if(jogador.X - 1 >= 0){
+                            jogador.X -= 1
+                            console.log(`confirmado :obj literal Movendo ${jogador} para esquerda`)
+                            return
+                        }
+                            
+                    },
+                    ArrowRight(jogador){
+
+                        if(teclaPressionada === 'ArrowRight' && jogador.X + 1 < screen.width){
+                            jogador.X  += 1
+                            console.log(`confirmado :obj literal Movendo ${jogador} para direita`)
+                            return
+                        }
+                            
+                    },
+                    ArrowDown(jogador){
+
+                        if(teclaPressionada === 'ArrowDown' && jogador.Y + 1 < screen.height){
+                            jogador.Y += 1
+                            console.log(`confirmado :obj literal Movendo ${jogador} para baixo`)
+                            return
+                        }
+                            
+                    }
+                }
+
+                const funcaoMover = movimentosAceitos[teclaPressionada]// dentro deste objeto eu quero acessar a funçaõ com o nome igual da tecla pressionada
+                //funcaoMover(jogador) // executo esta função  com o valor do jogador/player
+                //-----------------------------------adicionou um test aqui 
+                if (funcaoMover){
+                    funcaoMover(jogador)
+                }
+            }
+            // const player = state.Jogadores[ideintificador_jogador_atual]
+            // neste pedaço permite o jogador ultrapassar a dimensão do canvas de apenas 10 pixels
+            //Para ajeitar é somente n permitir o personagem esta posicionado em numeros negativo - poê no if para so passar numero positivo
+            // compare obj literal com os if
+
+            return {
+                movePlayer, state
+            } 
+        }
+        
+        const game = createGame()
+        const keyboardListener = createKeyboardListener()
+        //------adicionado observer
+        keyboardListener.inscreverObserver(game.movePlayer)//E agora, somente dentro do runtime que essas duas camadas vão se comunicar.
+        //-------------------------
+
+        //const network = createNetwork()                     // aqui criou um ponto da camada network para se comunicar com a camada input
+        //keyboardListener.inscreverObserver(network.update) // aqui add função do network para dentro do array dentro do state 
+
+        function createKeyboardListener(){
+            const state = {
+                observers : []
+            }
+
+            function inscreverObserver( Funcao_de_um_observer){
+                state.observers.push( Funcao_de_um_observer)
+            }
+
+            function notifyAll( comando_mensagem_encapsulada){
+                console.log(`keyboardListener -> Notificando ${state.observers.length} observers`)
+
+                for( const  Funcao_de_um_observer of state.observers){
+                    Funcao_de_um_observer(comando_mensagem_encapsulada)
+                }
+
+            }
+
+            document.addEventListener("keydown", handleKeyDown)
+
+            function handleKeyDown(event){            
+                const teclaPressionada = event.key
+                
+                const comando = {
+                    id_jogador : 'jogador1',// este nome server para ser procurado dentro da array dos jogadores por isso deve ter o seu nome de propriedade igual o id de cada jogador
+                    teclaPressionada
+                }
+
+                // vou remover pois n é o código desta camada
+                // game.movePlayer(comando) // este codigo aqui é da camada e logica+ regras = camada de jogo e não é da camada input
+                notifyAll(comando)
+            }
+
+            return{
+                inscreverObserver
+            }
+        }
+
+        renderScreen()
+
+        function renderScreen(){
+
+            context.fillStyle = 'white'
+            context.clearRect(0,0,10,10)
+
+            const cor1 = 'black'
+            const cor2 = 'green'
+            //para cada jogador , setar sua cor preta , dizer sua posição e seu tamanho
+            for (const id_jogador in game.state.Jogadores){
+                const jogador = game.state.Jogadores[id_jogador]
+                context.fillStyle = cor1
+                context.fillRect(jogador.X, jogador.Y, 1, 1)
+
+            }
+
+            for (const id_fruta in game.state.Frutas){
+                const fruta = game.state.Frutas[id_fruta]
+                context.fillStyle = cor2
+                context.fillRect(fruta.X, fruta.Y, 1, 1)
+
+            }
+
+            requestAnimationFrame(renderScreen)
+        }
+        
+    </script>
+</body>
+</html>
