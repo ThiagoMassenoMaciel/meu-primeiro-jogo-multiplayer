@@ -36,14 +36,14 @@
             const cor1 = 'black'
             const cor2 = 'green'
             //para cada jogador , setar sua cor preta , dizer sua posição e seu tamanho
-            for ( id_jogador in games.Jogadores){
+            for (const id_jogador in games.Jogadores){
                 const jogador = games.Jogadores[id_jogador] // acessando cada objeto que é um dos jogadores
                 context.fillStyle = cor1
                 context.fillRect(jogador.X, jogador.Y, 1, 1)
 
             }
 
-            for ( id_fruta in games.Frutas){
+            for (const id_fruta in games.Frutas){
                 const fruta = games.Frutas[id_fruta] // acessando cada objeto que é um dos jogadores
                 context.fillStyle = cor2
                 context.fillRect(fruta.X, fruta.Y, 1, 1)
