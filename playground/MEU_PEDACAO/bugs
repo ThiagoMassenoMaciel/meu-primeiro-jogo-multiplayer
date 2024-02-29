@@ -1,0 +1,8 @@
+antes eu tinha colocado uma cordenada além da dimensão do canvas 
+
+
+na aula 9 no minuto 4:20 n consigo testar add jogador pelo console 
+    a função add jogador esta funcionando 
+        ela realmente esta adicionando o que digitei no console dentro da arrays com os jogadores
+    a função que renderiza ela percorre todos os jogadores que estão na lista
+mesmo com tudo isso correto ele n aparece na tela do canvas o novo jogador com a posiççao que eu escolhi

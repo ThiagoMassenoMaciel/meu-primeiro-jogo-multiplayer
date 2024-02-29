@@ -16,19 +16,36 @@
         const ideintificador_jogador_atual = 'jogador1'
 
         function createGame(){
-            /* Esta é uma função Create game que quando executada ela vai retornar um objeto e dentro deste objeto vai conseguir acessar uma propriedade chamada move player : que tem o valor sendo uma função que recebe no parametro um comando , e quando esta função/método for executada vai fazer um display no log do id daquele jogado que esta se mexendo e qual direção ele se mexeu*/
+            // esta função é uma factory e para usar os metodos publicamente tem que por o nome de cada metodo retornando como se fosse um objeto
+            //todos os parametros de todos os metodos desta factory o felipe colocou o nome de comnand e eu mudei
+            /* Esta é uma função Create game que quando executada ela vai retornar um objeto e dentro deste objeto vai conseguir acessar(metodos) uma propriedade chamada move player : que tem o valor sendo uma função que recebe no parametro um comando , e quando esta função/método for executada vai fazer um display no log do id daquele jogado que esta se mexendo e qual direção ele se mexeu*/
 
             const state = {
                 Jogadores: {
-                    'jogador1' : { X : 1,Y: 1},
-                    'jogador2' : { X : 9,Y: 9}
                 }
                 ,
                 Frutas : {
-                    'Fruta1': { X : 4, Y : 4 },
-                    'Fruta2': { X : 15,Y :15 }
-                }
+                     }
             }      
+            //atores do jogo = frutas e jogadores = state
+            function adicionarJogador(objeto_com_todos_atores){
+                console.log(objeto_com_todos_atores)
+
+                const id__jogador = objeto_com_todos_atores.id_jogador
+                const posicao_jogador_X = objeto_com_todos_atores.posicao_X
+                const posicao_jogador_Y = objeto_com_todos_atores.posicao_Y
+
+                state.Jogadores[id__jogador] = {  // adicionar no objeto jogadores outro objeto com a chave id__jogador 
+                    x : posicao_jogador_X,
+                    y : posicao_jogador_Y
+                }
+           
+            }
+
+            function removerJogador(objeto_com_todos_atores){
+                const id__jogador = objeto_com_todos_atores.id_jogador
+                delete state.Jogadores[id__jogador]
+            }
 
             function movePlayer(comando){
                 // a regra de negócio é so executar quando o jogador pressionar uma tecla reservada
@@ -89,7 +106,10 @@
             // compare obj literal com os if
 
             return {
-                movePlayer, state
+                adicionarJogador,
+                removerJogador,
+                movePlayer, 
+                state
             } 
         }
         
@@ -143,7 +163,7 @@
         renderScreen()
 
         function renderScreen(){
-
+            console.log("----------------------------")
             context.fillStyle = 'white'
             context.clearRect(0,0,10,10)
 
@@ -151,19 +171,31 @@
             const cor2 = 'green'
             //para cada jogador , setar sua cor preta , dizer sua posição e seu tamanho
             for (const id_jogador in game.state.Jogadores){
+
+                console.log("Rodando o loop jogador")
                 const jogador = game.state.Jogadores[id_jogador]
+                console.log("pegado o jogador")
                 context.fillStyle = cor1
                 context.fillRect(jogador.X, jogador.Y, 1, 1)
+                console.log("add na tela fillRect()")
+
+                
+                
+                console.log(jogador ) //
 
             }
 
             for (const id_fruta in game.state.Frutas){
+                
+
+
                 const fruta = game.state.Frutas[id_fruta]
                 context.fillStyle = cor2
                 context.fillRect(fruta.X, fruta.Y, 1, 1)
-
+               // console.log("-")
+                //console.log(fruta)
             }
-
+// use isto para testar adicionar um player na hora do execução      setTimeout(renderScreen, 20000)
             requestAnimationFrame(renderScreen)
         }
         

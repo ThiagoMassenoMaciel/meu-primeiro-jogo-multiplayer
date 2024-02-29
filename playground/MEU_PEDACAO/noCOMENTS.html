@@ -19,15 +19,33 @@
             const state = {
                 Jogadores: {
                     'jogador1' : { X : 1,Y: 1},
-                    'jogador2' : { X : 9,Y: 9}
+                    'jogador2' : { X : 9,Y: 9},
+                    'Thiago'   : { X : 2,Y: 2}
                 }
                 ,
                 Frutas : {
                     'Fruta1': { X : 4, Y : 4 },
-                    'Fruta2': { X : 15,Y :15 }
+                    'Fruta2': { X : 10,Y :10 }
                 }
             }      
+            function adicionarJogador(objeto_com_todos_atores){
+                console.log(objeto_com_todos_atores)
 
+                const id__jogador = objeto_com_todos_atores.id_jogador
+                const posicao_jogador_X = objeto_com_todos_atores.posicao_X
+                const posicao_jogador_Y = objeto_com_todos_atores.posicao_Y
+
+                state.Jogadores[id__jogador] = {  // adicionar no objeto jogadores outro objeto com a chave id__jogador 
+                    x : posicao_jogador_X,
+                    y : posicao_jogador_Y
+                }
+           
+            }
+
+            function removerJogador(objeto_com_todos_atores){
+                const id__jogador = objeto_com_todos_atores.id_jogador
+                delete state.Jogadores[id__jogador]
+            }
             function movePlayer(comando){
                 console.log(`game.movePlayer -> Movendo ${comando.id_jogador} com ${comando.teclaPressionada} `)
 
@@ -79,12 +97,15 @@
                 }
             }
 
+
             return {
+                removerJogador, adicionarJogador, 
                 movePlayer, state
             } 
         }
         
         const game = createGame()
+
         const keyboardListener = createKeyboardListener()
 
         keyboardListener.inscreverObserver(game.movePlayer)
@@ -152,6 +173,7 @@
             requestAnimationFrame(renderScreen)
         }
         
+    
     </script>
 </body>
 </html>
